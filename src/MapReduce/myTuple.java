@@ -1,14 +1,28 @@
 package MapReduce;
 
-public class myTuple {
-    public  String key;
-    public  Integer value;
-    public myTuple(String key, int value){
-        this.key = key;
-        this.value = value;
+public class myTuple<A,B> {
+    private A a;
+
+    private B b;
+
+    public myTuple(A a, B b) {
+        this.a = a;
+        this.b = b;
     }
 
-    public void printTuple(){
-        System.out.println(this.key + ": " + this.value);
+    public A getA() {
+        return a;
+    }
+
+    public void setA(A a) {
+        this.a = a;
+    }
+
+    public B getB() {
+        return b;
+    }
+
+    public void setB(B b) {
+        this.b = b;
     }
 }

@@ -1,4 +1,4 @@
-package MapReduce;
+package HTSC.MapReduce;
 
 import java.io.*;
 import java.util.ArrayList;
