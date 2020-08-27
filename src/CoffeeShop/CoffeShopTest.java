@@ -28,7 +28,6 @@ public class CoffeShopTest {
                 break;
             }
 
-
             Beverage coffee;
             switch (coffeeIndex) {
                 case 1:
@@ -44,7 +43,6 @@ public class CoffeShopTest {
                     coffee = new Frappuccino();
                     flag = false; //默认
                     break ok;
-
             }
 
             System.out.println("请选择杯型：");
@@ -77,9 +75,28 @@ public class CoffeShopTest {
 
             System.out.println("请选择加料：");
             System.out.println("1. 牛奶    2. 焦糖   3.不想加了   （可以加多次，默认不加）");
-            int condimentIndex = scanner.nextInt();
+            int condimentIndex;
+
+            if (scanner.hasNextInt()) {
+                condimentIndex = Integer.parseInt(scanner.next());
+            } else {
+                System.out.println("请输入数字！");
+                flag = false;
+                break;
+            }
+
+
             System.out.println("请输入加料份数：");
-            int condimentNum = scanner.nextInt();
+            int condimentNum;
+
+            if (scanner.hasNextInt()) {
+                condimentNum = Integer.parseInt(scanner.next());
+            } else {
+                System.out.println("请输入数字！");
+                flag = false;
+                break;
+            }
+
             while (condimentNum>0){
                 switch (condimentIndex) {
                     case 1:
@@ -91,10 +108,12 @@ public class CoffeShopTest {
                         condimentNum --;
                         break;
                     default:
+                        condimentNum --;
                         break ;
                 }
             }
 
+            yes:
             System.out.println(coffeeWithCondiment.getSize() + coffeeWithCondiment.getDescription() + " 价格是：" + coffeeWithCondiment.cost());
             totalCost += coffeeWithCondiment.cost();
             totalNum ++;
@@ -102,4 +121,7 @@ public class CoffeShopTest {
 
         System.out.println("您点了 " + totalNum + " 杯，总价： " + totalCost );
     }
+
+
+
 }
