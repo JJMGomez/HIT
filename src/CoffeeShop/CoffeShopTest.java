@@ -9,7 +9,7 @@ public class CoffeShopTest {
 
     public static final int COFFEETYPE = 3;
     public static final int SIZETYPE = 3;
-    public static final int CARAMELTYPE = 3;
+    public static final int CARAMELTYPE = 2;
 
     public static Scanner scanner = new Scanner(System.in);
 
@@ -54,6 +54,25 @@ public class CoffeShopTest {
         return -1;
     }
 
+    public static Beverage ChooseDecorate(Beverage beverage, int decorateIndex, int num){
+        while (num>0){
+            switch (decorateIndex) {
+                case 1:
+                    beverage = new Milk(beverage);
+                    num --;
+                    break;
+                case 2:
+                    beverage = new Caramel(beverage);
+                    num --;
+                    break;
+                default:
+                    num --;
+                    break ;
+            }
+        }
+        return beverage;
+    }
+
     public static void main(String[] args) {
 
         double totalCost = 0.0;
@@ -64,40 +83,40 @@ public class CoffeShopTest {
             System.out.println("—————————————————————————");
             System.out.println("欢迎点单～");
             System.out.println("请选择咖啡：");
-            System.out.println("1. 浓缩    2. 拿铁   3.星冰乐  （输入其他内容退出点单，并计算总价） ");
+            System.out.println("1. 浓缩（30）    2. 拿铁（31）   3.星冰乐（32）  （输入其他内容退出点单，并计算总价） ");
 
-
+            //输入咖啡编号并验证
             int coffeeIndex = InputCheck(COFFEETYPE);
-            if (coffeeIndex==-1){
+            if (coffeeIndex == -1) {
                 flag = false;
                 break;
             }
-
+            //根据咖啡编号选择咖啡
             Beverage coffee = ChooseCoffee(coffeeIndex);
-            if (coffee== null){
-                flag = false; //默认
+            if (coffee == null) {
+                flag = false;
                 break;
             }
-
 
             System.out.println("请选择杯型：");
-            System.out.println("1. 中杯    2. 大杯   3.超大杯  （默认大杯）");
+            System.out.println("1. 中杯    2. 大杯（+2）   3.超大杯（+4）  （默认大杯）");
 
+            //输入杯型编号并验证
             int size = InputCheck(SIZETYPE);
-            if (size==-1){
+            if (size == -1) {
                 flag = false;
                 break;
             }
+            //选择杯型
+            ChooseCoffeeSize(coffee, size);
 
-            ChooseCoffeeSize(coffee,size);
+            boolean flag2 = true;
+            while (flag2) {
+                System.out.println("请选择加料：");
+                System.out.println("1. 牛奶（+3）    2. 焦糖（+2）   3.不想加了   （可以加多次，默认不加）");
+                int condimentIndex = InputCheck(CARAMELTYPE);
 
-            Beverage coffeeWithCondiment = coffee;
-
-            System.out.println("请选择加料：");
-            System.out.println("1. 牛奶    2. 焦糖   3.不想加了   （可以加多次，默认不加）");
-            int condimentIndex= InputCheck(CARAMELTYPE);
-
-            if (condimentIndex!=-1) {
+                if (condimentIndex != -1) {
 
                     System.out.println("请输入加料份数：");
                     int condimentNum;
@@ -106,43 +125,27 @@ public class CoffeShopTest {
                         condimentNum = Integer.parseInt(scanner.next());
                     } else {
                         System.out.println("请输入正确数字！");
-                        flag = false;
                         break;
                     }
 
-                    while (condimentNum>0){
-                        switch (condimentIndex) {
-                            case 1:
-                                coffeeWithCondiment = new Milk(coffeeWithCondiment);
-                                condimentNum --;
-                                break;
-                            case 2:
-                                coffeeWithCondiment = new Caramel(coffeeWithCondiment);
-                                condimentNum --;
-                                break;
-                            default:
-                                condimentNum --;
-                                break ;
-                        }
-                    }
+                    coffee = ChooseDecorate(coffee, condimentIndex, condimentNum);
 
-            } else {
-                System.out.println("请输入数字！");
-                flag = false;
-                break;
+
+                } else {
+                    flag2 = false;
+                    break;
+                }
+
             }
+            System.out.println("您点了 " + coffee.getSize() + coffee.getDescription() + " 价格是：" + coffee.cost());
+            totalCost += coffee.cost();
+            totalNum++;
 
 
 
-
-            System.out.println("您点了 " + coffeeWithCondiment.getSize() + coffeeWithCondiment.getDescription() + " 价格是：" + coffeeWithCondiment.cost());
-            totalCost += coffeeWithCondiment.cost();
-            totalNum ++;
         }
+        System.out.println("您一共点了 " + totalNum + " 杯，总价： " + totalCost);
 
-        System.out.println("您一共点了 " + totalNum + " 杯，总价： " + totalCost );
     }
-
-
 
 }
