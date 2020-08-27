@@ -2,7 +2,8 @@ package CoffeeShop;
 
 public abstract class Beverage {
     String description;
-    Size size = Size.Grande;
+    Size size;
+
 
     public abstract double cost();
 
