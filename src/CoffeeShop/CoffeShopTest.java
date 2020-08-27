@@ -79,41 +79,43 @@ public class CoffeShopTest {
 
             if (scanner.hasNextInt()) {
                 condimentIndex = Integer.parseInt(scanner.next());
-            } else {
-                System.out.println("请输入数字！");
-                flag = false;
-                break;
-            }
+                if (condimentIndex == 1 || condimentIndex == 2 ){
+                    System.out.println("请输入加料份数：");
+                    int condimentNum;
 
-
-            System.out.println("请输入加料份数：");
-            int condimentNum;
-
-            if (scanner.hasNextInt()) {
-                condimentNum = Integer.parseInt(scanner.next());
-            } else {
-                System.out.println("请输入数字！");
-                flag = false;
-                break;
-            }
-
-            while (condimentNum>0){
-                switch (condimentIndex) {
-                    case 1:
-                        coffeeWithCondiment = new Milk(coffeeWithCondiment);
-                        condimentNum --;
+                    if (scanner.hasNextInt()) {
+                        condimentNum = Integer.parseInt(scanner.next());
+                    } else {
+                        System.out.println("请输入数字！");
+                        flag = false;
                         break;
-                    case 2:
-                        coffeeWithCondiment = new Caramel(coffeeWithCondiment);
-                        condimentNum --;
-                        break;
-                    default:
-                        condimentNum --;
-                        break ;
+                    }
+
+                    while (condimentNum>0){
+                        switch (condimentIndex) {
+                            case 1:
+                                coffeeWithCondiment = new Milk(coffeeWithCondiment);
+                                condimentNum --;
+                                break;
+                            case 2:
+                                coffeeWithCondiment = new Caramel(coffeeWithCondiment);
+                                condimentNum --;
+                                break;
+                            default:
+                                condimentNum --;
+                                break ;
+                        }
+                    }
                 }
+            } else {
+                System.out.println("请输入数字！");
+                flag = false;
+                break;
             }
 
-            yes:
+
+
+
             System.out.println(coffeeWithCondiment.getSize() + coffeeWithCondiment.getDescription() + " 价格是：" + coffeeWithCondiment.cost());
             totalCost += coffeeWithCondiment.cost();
             totalNum ++;
